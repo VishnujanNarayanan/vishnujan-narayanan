@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import ThemeToggle from './ThemeToggle'
+import ThemeToggle from '@/components/ThemeToggle'
 
 const navigation = [
   { name: 'Home', href: '/' },
@@ -16,11 +16,11 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
-      <nav className="container-custom flex items-center justify-between h-16">
-        {/* Logo */}
+      <nav className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+        {/* Logo - UPDATED HERE */}
         <div className="flex items-center">
-          <Link href="/" className="text-xl font-bold bg-gradient-to-r from-primary-600 to-blue-400 bg-clip-text text-transparent">
-            AI Engineer
+          <Link href="/" className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
+            Full-Stack ML Engineer
           </Link>
         </div>
 
@@ -30,7 +30,7 @@ export default function Header() {
             <Link
               key={item.name}
               href={item.href}
-              className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+              className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
             >
               {item.name}
             </Link>
@@ -63,7 +63,7 @@ export default function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="block py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400"
+                className="block py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {item.name}
