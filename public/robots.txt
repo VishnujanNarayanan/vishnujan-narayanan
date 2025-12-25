@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Block preview deployments
+Disallow: /*-git-*
+Disallow: /*-vercel.app
+
+Sitemap: https://vishnujan-narayanan.vercel.app/sitemap.xml
