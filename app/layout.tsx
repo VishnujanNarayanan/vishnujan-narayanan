@@ -2,7 +2,8 @@
 import { Inter } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/Header'
-import Footer from '@/components/Footer' // Add this import
+import Footer from '@/components/Footer'
+import { ThemeProvider } from '@/components/ThemeProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -45,37 +46,38 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className={`${inter.className} bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200`}>
-        {/* Structured Data for SEO */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Person",
-              name: "Vishnujan Narayanan",
-              url: "https://vishnujan-narayanan.vercel.app",
-              sameAs: [
-                "https://www.linkedin.com/in/vishnujan-narayanan",
-                "https://github.com/VishnujanNarayanan"
-              ],
-              jobTitle: "Full-Stack Machine Learning Engineer",
-              worksFor: {
-                "@type": "Organization",
-                name: "Independent / Open Source"
-              }
-            }),
-          }}
-        />
+    <html lang="en" className="scroll-smooth dark">
+      <body className={`${inter.className} bg-gray-900 text-gray-100`}>
+        <ThemeProvider>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Person",
+                name: "Vishnujan Narayanan",
+                url: "https://vishnujan-narayanan.vercel.app",
+                sameAs: [
+                  "https://www.linkedin.com/in/vishnujan-narayanan",
+                  "https://github.com/VishnujanNarayanan"
+                ],
+                jobTitle: "Full-Stack Machine Learning Engineer",
+                worksFor: {
+                  "@type": "Organization",
+                  name: "Independent / Open Source"
+                }
+              }),
+            }}
+          />
 
-        <Header />
-        
-        <main className="min-h-screen">
-          {children}
-        </main>
-        
-        <Footer /> {/* Replace old footer with component */}
+          <Header />
+          
+          <main className="min-h-screen">
+            {children}
+          </main>
+          
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   )

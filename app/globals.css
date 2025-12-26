@@ -3,17 +3,9 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 10, 10, 10;
-  --background-start-rgb: 255, 255, 255;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 240, 240, 240;
-    --background-start-rgb: 10, 10, 10;
-    --background-end-rgb: 15, 15, 15;
-  }
+  --foreground-rgb: 240, 240, 240;
+  --background-start-rgb: 10, 10, 10;
+  --background-end-rgb: 15, 15, 15;
 }
 
 body {
@@ -77,23 +69,18 @@ body {
   }
 }
 
-/* Custom Animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+/* Animation Classes */
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
 }
 
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
+.animate-slide-up {
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes slideUp {
@@ -107,108 +94,137 @@ body {
   }
 }
 
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes scaleUp {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-@keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-}
-
-/* Animation Classes */
-.animate-fade-in {
-  animation: fadeIn 0.3s ease-out;
-}
-
-.animate-fade-out {
-  animation: fadeOut 0.3s ease-out;
-}
-
-.animate-slide-up {
-  animation: slideUp 0.3s ease-out;
-}
-
-.animate-slide-down {
-  animation: slideDown 0.3s ease-out;
-}
-
-.animate-scale-up {
-  animation: scaleUp 0.3s ease-out;
-}
-
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
-.animate-pulse {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-/* Smooth transitions for all elements */
-* {
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-}
-
-/* For smoother card expansions */
+/* Card transitions */
 .card-transition {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
-/* Card container fixes */
+
+/* =========================================== */
+/* CRITICAL FIXES */
+/* =========================================== */
+
+/* Projects grid - prevent vertical movement */
 .projects-grid {
   position: relative;
-  overflow: visible !important;
+  display: grid;
+  grid-auto-rows: minmax(380px, auto);
 }
 
+/* Card wrapper */
 .card-wrapper {
   position: relative;
+  height: 100%;
+}
+
+/* =========================================== */
+/* FIX 1: TOP ROW EXPANSION */
+/* =========================================== */
+
+/* When TOP ROW card expands, bottom row moves up UNDER it */
+.projects-grid:has(.top-row.expanded) > div:nth-child(n+4) {
+  margin-top: -320px !important;
+  z-index: 10 !important; /* Under expanded card */
+}
+
+/* Top row expanded card should be on top */
+.top-row.expanded {
+  z-index: 100 !important;
+}
+
+.top-row.expanded .card-transition {
+  z-index: 100 !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* =========================================== */
+/* FIX 2: BOTTOM ROW EXPANSION */
+/* =========================================== */
+
+/* BOTTOM ROW cards - NO VERTICAL MOVEMENT when they expand */
+.bottom-row.expanded {
+  z-index: 150 !important; /* Highest z-index */
+}
+
+/* When BOTTOM ROW card expands, it stays in place */
+.bottom-row.expanded .card-transition {
+  z-index: 150 !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* IMPORTANT: When BOTTOM ROW expands, top row should NOT move */
+.projects-grid:has(.bottom-row.expanded) > div:nth-child(-n+3) {
+  margin-top: 0 !important; /* Top row stays in place */
+}
+
+/* =========================================== */
+/* FIX: HOVER INDICATOR POSITION */
+/* =========================================== */
+
+/* Hover indicator - positioned right at card bottom */
+.card-wrapper .absolute[class*="translate-y-1/2"] {
+  /* This positions it so half is below the card */
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* Make sure the card has enough bottom padding for the indicator */
+.card-transition {
+  padding-bottom: 4px; /* Add a little space for the indicator */
+}
+
+/* When indicator is visible, ensure it doesn't get clipped */
+.card-wrapper {
   overflow: visible !important;
 }
 
-/* Ensure expanded cards don't cause horizontal scroll */
-@media (min-width: 768px) {
-  .projects-grid {
-    margin-left: -1rem;
-    margin-right: -1rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
+/* Hide indicator when card is hovered or expanded */
+.card-wrapper:hover .absolute[class*="translate-y-1/2"],
+.card-wrapper.expanded .absolute[class*="translate-y-1/2"] {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
 }
 
-/* Prevent body scroll when cards expand */
+
+/* =========================================== */
+/* Z-INDEX UTILITIES */
+/* =========================================== */
+
+.z-10 {
+  z-index: 10 !important;
+}
+
+.z-20 {
+  z-index: 20 !important;
+}
+
+.z-100 {
+  z-index: 100 !important;
+}
+
+.z-150 {
+  z-index: 150 !important;
+}
+
+/* Body scroll fix */
 body.card-expanded {
   overflow-x: hidden;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
 }
