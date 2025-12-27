@@ -71,9 +71,12 @@ export default function ProjectCard({ project, index, totalCards = 3, row = 0 }:
   const [isHovering, setIsHovering] = useState(false)
   const [isMobileDialogOpen, setIsMobileDialogOpen] = useState(false)
   const [showMobileTools, setShowMobileTools] = useState(false)
+  const [isMobileExpanded, setIsMobileExpanded] = useState(false)
+  const [mobileExpandedHeight, setMobileExpandedHeight] = useState<string>('240px')
   const [primaryColor, setPrimaryColor] = useState<ColorKey>('blue')
   const cardRef = useRef<HTMLDivElement>(null)
   const dialogRef = useRef<HTMLDivElement>(null)
+  const mobileCardRef = useRef<HTMLDivElement>(null)
   
   useEffect(() => {
     const colors: ColorKey[] = ['blue', 'purple', 'cyan', 'green', 'orange', 'pink']
@@ -99,15 +102,23 @@ export default function ProjectCard({ project, index, totalCards = 3, row = 0 }:
     }
   }
 
-  const handleMobileClick = () => {
-    if (!showMobileTools) {
-      // First tap: show technologies
+  const handleMobileTap = () => {
+    if (!isMobileExpanded) {
+      // First tap: expand downward to show tools
+      setIsMobileExpanded(true)
       setShowMobileTools(true)
+      setMobileExpandedHeight('360px') // Same as desktop hover height
     } else {
-      // Second tap: open dialog
+      // Second tap when expanded: open dialog
       setIsMobileDialogOpen(true)
-      setShowMobileTools(false)
     }
+  }
+
+  const handleCloseMobileTools = () => {
+    // Collapse upward to original position
+    setIsMobileExpanded(false)
+    setShowMobileTools(false)
+    setMobileExpandedHeight('240px')
   }
 
   const handleMouseLeaveExpanded = () => {
@@ -183,6 +194,11 @@ export default function ProjectCard({ project, index, totalCards = 3, row = 0 }:
     return '240px'
   }
 
+  const getMobileCardHeight = () => {
+    if (isMobileExpanded) return mobileExpandedHeight
+    return '240px'
+  }
+
   useEffect(() => {
     if (isExpanded && cardRef.current) {
       const cardRect = cardRef.current.getBoundingClientRect()
@@ -201,6 +217,17 @@ export default function ProjectCard({ project, index, totalCards = 3, row = 0 }:
     }
   }, [isExpanded])
 
+  // Auto-close mobile tools after 3 seconds
+  useEffect(() => {
+    if (showMobileTools && isMobileExpanded) {
+      const timer = setTimeout(() => {
+        handleCloseMobileTools()
+      }, 3000)
+      
+      return () => clearTimeout(timer)
+    }
+  }, [showMobileTools, isMobileExpanded])
+
   // Close mobile dialog when clicking outside
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -217,17 +244,6 @@ export default function ProjectCard({ project, index, totalCards = 3, row = 0 }:
       document.removeEventListener('mousedown', handleClickOutside)
     }
   }, [isMobileDialogOpen])
-
-  // Auto-hide mobile tools after 3 seconds
-  useEffect(() => {
-    if (showMobileTools) {
-      const timer = setTimeout(() => {
-        setShowMobileTools(false)
-      }, 3000)
-      
-      return () => clearTimeout(timer)
-    }
-  }, [showMobileTools])
 
   return (
     <>
@@ -396,10 +412,17 @@ export default function ProjectCard({ project, index, totalCards = 3, row = 0 }:
           )}
         </div>
 
-        {/* Mobile Card - Simple tap interaction */}
+        {/* Mobile Card - Expands downward, collapses upward */}
         <div 
-          className="lg:hidden bg-gray-900 rounded-2xl border border-gray-800 shadow-lg transition-all duration-300"
-          onClick={handleMobileClick}
+          ref={mobileCardRef}
+          className={`lg:hidden bg-gray-900 rounded-2xl border border-gray-800 shadow-lg transition-all duration-300 overflow-hidden ${
+            isMobileExpanded ? 'scale-[1.02] shadow-xl' : 'shadow-sm'
+          }`}
+          style={{
+            minHeight: getMobileCardHeight(),
+            transformOrigin: 'top', // Expand from top, collapse to top
+          }}
+          onClick={handleMobileTap}
         >
           <div className={`h-1.5 rounded-t-2xl bg-gradient-to-r ${colors.gradient}`} />
           
@@ -421,8 +444,8 @@ export default function ProjectCard({ project, index, totalCards = 3, row = 0 }:
               </div>
             </div>
 
-            {/* Show technologies on first tap */}
-            {showMobileTools ? (
+            {/* Show technologies when expanded */}
+            {showMobileTools && isMobileExpanded ? (
               <div className="mb-4 animate-fade-in">
                 <h4 className="font-semibold text-white mb-2 text-sm">
                   Technologies Used
@@ -455,6 +478,15 @@ export default function ProjectCard({ project, index, totalCards = 3, row = 0 }:
               </div>
             )}
           </div>
+
+          {/* Optional: Add a subtle bottom border when expanded to show it can expand more */}
+          {isMobileExpanded && (
+            <div className="px-6 pb-3 animate-fade-in">
+              <div className="text-center text-xs text-gray-500">
+                ↑ Auto-collapses in 3 seconds
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Hover Indicator - Desktop only */}
@@ -468,7 +500,7 @@ export default function ProjectCard({ project, index, totalCards = 3, row = 0 }:
         )}
       </div>
 
-      {/* Mobile Dialog Overlay - Simple dialog without navigation */}
+      {/* Mobile Dialog Overlay */}
       {isMobileDialogOpen && (
         <div 
           className="fixed inset-0 bg-black/80 z-50 lg:hidden flex items-center justify-center p-4 backdrop-blur-sm"
