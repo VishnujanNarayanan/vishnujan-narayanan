@@ -84,20 +84,24 @@ export default function ProjectCard({ project, index, totalCards = 3, row = 0 }:
     e.stopPropagation()
     e.preventDefault()
     
-    setIsExpanded(!isExpanded)
-    setIsHovering(true)
+    const newExpandedState = !isExpanded
+    setIsExpanded(newExpandedState)
     
-    if (!isExpanded) {
+    if (newExpandedState) {
+      // When expanding: keep hover state
+      setIsHovering(true)
       document.body.classList.add('card-expanded')
     } else {
-      document.body.classList.remove('card-expanded')
+      // When collapsing: immediately remove hover state
       setIsHovering(false)
+      document.body.classList.remove('card-expanded')
     }
   }
 
   const handleMouseLeaveExpanded = () => {
     if (isExpanded) {
       setIsExpanded(false)
+      setIsHovering(false) // Add this line
       document.body.classList.remove('card-expanded')
     }
   }

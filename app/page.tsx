@@ -1,5 +1,6 @@
 import Hero from '@/components/Hero'
 import FeaturedProjects from '@/components/FeaturedProjects'
+import ExperienceSection from '@/components/ExperienceSection' // Add this import
 import SkillsSection from '@/components/SkillsSection'
 import Contact from '@/components/Contact'
 
@@ -20,6 +21,7 @@ export default function Home() {
 
       <Hero />
       <FeaturedProjects />
+      <ExperienceSection /> {/* Add this line */}
       <SkillsSection />
       <Contact />
     </>

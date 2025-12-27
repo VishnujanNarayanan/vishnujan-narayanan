@@ -49,32 +49,6 @@ export default function ProjectsPage() {
             )
           })}
         </div>
-        
-        {/* Stats */}
-        <div className="mt-12 pt-8 border-t border-gray-800">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div className="text-center p-4">
-              <div className="text-3xl font-bold text-white mb-2">{projects.length}</div>
-              <div className="text-gray-400">Total Projects</div>
-            </div>
-            <div className="text-center p-4">
-              <div className="text-3xl font-bold text-white mb-2">
-                {projects.filter(p => p.liveUrl).length}
-              </div>
-              <div className="text-gray-400">Live Demos</div>
-            </div>
-            <div className="text-center p-4">
-              <div className="text-3xl font-bold text-white mb-2">
-                {Array.from(new Set(projects.flatMap(p => p.technologies))).length}
-              </div>
-              <div className="text-gray-400">Technologies</div>
-            </div>
-            <div className="text-center p-4">
-              <div className="text-3xl font-bold text-white mb-2">100%</div>
-              <div className="text-gray-400">Open Source</div>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   )
