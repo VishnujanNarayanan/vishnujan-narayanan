@@ -8,8 +8,6 @@ import {
   ChevronUpIcon,
   BoltIcon,
   EyeIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
   XMarkIcon
 } from '@heroicons/react/24/outline'
 import { Project } from '@/lib/data'
@@ -19,8 +17,6 @@ interface ProjectCardProps {
   index: number
   totalCards: number
   row?: number
-  onNext?: () => void
-  onPrev?: () => void
 }
 
 const colorClasses = {
@@ -70,16 +66,14 @@ const colorClasses = {
 
 type ColorKey = keyof typeof colorClasses
 
-export default function ProjectCard({ project, index, totalCards = 3, row = 0, onNext, onPrev }: ProjectCardProps) {
+export default function ProjectCard({ project, index, totalCards = 3, row = 0 }: ProjectCardProps) {
   const [isExpanded, setIsExpanded] = useState(false)
   const [isHovering, setIsHovering] = useState(false)
   const [isMobileDialogOpen, setIsMobileDialogOpen] = useState(false)
-  const [isMobileHovering, setIsMobileHovering] = useState(false)
+  const [showMobileTools, setShowMobileTools] = useState(false)
   const [primaryColor, setPrimaryColor] = useState<ColorKey>('blue')
   const cardRef = useRef<HTMLDivElement>(null)
-  const mobileCardRef = useRef<HTMLDivElement>(null)
   const dialogRef = useRef<HTMLDivElement>(null)
-  const holdTimerRef = useRef<NodeJS.Timeout | null>(null)
   
   useEffect(() => {
     const colors: ColorKey[] = ['blue', 'purple', 'cyan', 'green', 'orange', 'pink']
@@ -105,8 +99,15 @@ export default function ProjectCard({ project, index, totalCards = 3, row = 0, o
     }
   }
 
-  const handleMobileDialogToggle = () => {
-    setIsMobileDialogOpen(!isMobileDialogOpen)
+  const handleMobileClick = () => {
+    if (!showMobileTools) {
+      // First tap: show technologies
+      setShowMobileTools(true)
+    } else {
+      // Second tap: open dialog
+      setIsMobileDialogOpen(true)
+      setShowMobileTools(false)
+    }
   }
 
   const handleMouseLeaveExpanded = () => {
@@ -114,31 +115,6 @@ export default function ProjectCard({ project, index, totalCards = 3, row = 0, o
       setIsExpanded(false)
       setIsHovering(false)
       document.body.classList.remove('card-expanded')
-    }
-  }
-
-  const handleMobileTouchStart = () => {
-    // Start showing tools on hold
-    holdTimerRef.current = setTimeout(() => {
-      setIsMobileHovering(true)
-    }, 300) // Show tools after 300ms hold
-  }
-
-  const handleMobileTouchEnd = () => {
-    // Clear the hold timer
-    if (holdTimerRef.current) {
-      clearTimeout(holdTimerRef.current)
-      holdTimerRef.current = null
-    }
-    
-    // If tools are showing, hide them after a moment
-    if (isMobileHovering) {
-      setTimeout(() => {
-        setIsMobileHovering(false)
-      }, 1500) // Keep tools visible for 1.5 seconds
-    } else {
-      // If quick tap (not hold), open dialog
-      handleMobileDialogToggle()
     }
   }
 
@@ -241,6 +217,17 @@ export default function ProjectCard({ project, index, totalCards = 3, row = 0, o
       document.removeEventListener('mousedown', handleClickOutside)
     }
   }, [isMobileDialogOpen])
+
+  // Auto-hide mobile tools after 3 seconds
+  useEffect(() => {
+    if (showMobileTools) {
+      const timer = setTimeout(() => {
+        setShowMobileTools(false)
+      }, 3000)
+      
+      return () => clearTimeout(timer)
+    }
+  }, [showMobileTools])
 
   return (
     <>
@@ -409,13 +396,10 @@ export default function ProjectCard({ project, index, totalCards = 3, row = 0, o
           )}
         </div>
 
-        {/* Mobile Card - With hover mechanics */}
+        {/* Mobile Card - Simple tap interaction */}
         <div 
-          ref={mobileCardRef}
-          className="lg:hidden bg-gray-900 rounded-2xl border border-gray-800 shadow-lg transition-all duration-300 cursor-pointer"
-          onTouchStart={handleMobileTouchStart}
-          onTouchEnd={handleMobileTouchEnd}
-          onClick={(e) => e.preventDefault()} // Prevent double-tap
+          className="lg:hidden bg-gray-900 rounded-2xl border border-gray-800 shadow-lg transition-all duration-300"
+          onClick={handleMobileClick}
         >
           <div className={`h-1.5 rounded-t-2xl bg-gradient-to-r ${colors.gradient}`} />
           
@@ -437,14 +421,14 @@ export default function ProjectCard({ project, index, totalCards = 3, row = 0, o
               </div>
             </div>
 
-            {/* Technologies shown on hold */}
-            {isMobileHovering ? (
-              <div className="mb-6 animate-fade-in">
-                <h4 className="font-semibold text-white mb-3 text-sm">
+            {/* Show technologies on first tap */}
+            {showMobileTools ? (
+              <div className="mb-4 animate-fade-in">
+                <h4 className="font-semibold text-white mb-2 text-sm">
                   Technologies Used
                 </h4>
-                <div className="flex flex-wrap gap-2">
-                  {project.technologies.map((tech) => (
+                <div className="flex flex-wrap gap-1">
+                  {project.technologies.slice(0, 4).map((tech) => (
                     <span
                       key={tech}
                       className={`px-2 py-1 text-xs font-medium rounded-full ${colors.bg} ${colors.text} border ${colors.border}`}
@@ -452,20 +436,24 @@ export default function ProjectCard({ project, index, totalCards = 3, row = 0, o
                       {tech}
                     </span>
                   ))}
+                  {project.technologies.length > 4 && (
+                    <span className="px-2 py-1 text-xs font-medium rounded-full bg-gray-800 text-gray-300 border border-gray-700">
+                      +{project.technologies.length - 4}
+                    </span>
+                  )}
+                </div>
+                <div className="mt-3 text-center text-xs text-gray-400">
+                  Tap again for full details
                 </div>
               </div>
             ) : (
-              // No technologies shown by default - just minimal info
-              <div className="h-8"></div> // Spacer to keep consistent height
+              <div className="flex items-center justify-between text-sm text-gray-400">
+                <span className="flex items-center gap-1">
+                  <EyeIcon className="h-3 w-3" />
+                  <span>Tap to view tools</span>
+                </span>
+              </div>
             )}
-
-            <div className="flex items-center justify-between text-sm text-gray-400 mt-4">
-              <span className="flex items-center gap-1">
-                <EyeIcon className="h-3 w-3" />
-                <span>{isMobileHovering ? 'Release to close' : 'Hold to view tools'}</span>
-              </span>
-              <ChevronRightIcon className="h-4 w-4" />
-            </div>
           </div>
         </div>
 
@@ -480,7 +468,7 @@ export default function ProjectCard({ project, index, totalCards = 3, row = 0, o
         )}
       </div>
 
-      {/* Mobile Dialog Overlay */}
+      {/* Mobile Dialog Overlay - Simple dialog without navigation */}
       {isMobileDialogOpen && (
         <div 
           className="fixed inset-0 bg-black/80 z-50 lg:hidden flex items-center justify-center p-4 backdrop-blur-sm"
@@ -589,32 +577,14 @@ export default function ProjectCard({ project, index, totalCards = 3, row = 0, o
                 </div>
               </div>
 
-              {/* Navigation buttons */}
-              <div className="pt-6 border-t border-gray-700/50 flex justify-between items-center">
+              {/* Close button at bottom */}
+              <div className="pt-6 border-t border-gray-700/50">
                 <button
-                  onClick={onPrev}
-                  className={`flex items-center gap-2 px-4 py-3 rounded-xl ${colors.bg} ${colors.text} hover:opacity-80 transition-all border ${colors.border} ${
-                    !onPrev ? 'opacity-50 cursor-not-allowed' : ''
-                  }`}
-                  disabled={!onPrev}
+                  onClick={() => setIsMobileDialogOpen(false)}
+                  className={`w-full py-3 rounded-xl border ${colors.border} text-sm font-medium ${colors.text} hover:opacity-80 transition-all flex items-center justify-center gap-2 bg-gray-800/50`}
                 >
-                  <ChevronLeftIcon className="h-4 w-4" />
-                  <span className="text-sm font-medium">Previous</span>
-                </button>
-                
-                <div className="text-xs text-gray-400">
-                  Project {index + 1}
-                </div>
-                
-                <button
-                  onClick={onNext}
-                  className={`flex items-center gap-2 px-4 py-3 rounded-xl ${colors.bg} ${colors.text} hover:opacity-80 transition-all border ${colors.border} ${
-                    !onNext ? 'opacity-50 cursor-not-allowed' : ''
-                  }`}
-                  disabled={!onNext}
-                >
-                  <span className="text-sm font-medium">Next</span>
-                  <ChevronRightIcon className="h-4 w-4" />
+                  <XMarkIcon className="h-4 w-4" />
+                  <span>Close Details</span>
                 </button>
               </div>
             </div>
