@@ -80,13 +80,18 @@ export default function ProjectCard({ project, index, totalCards = 3, row = 0 }:
 
   const colors = colorClasses[primaryColor]
 
-  const handleToggleExpand = () => {
+  const handleToggleExpand = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    e.preventDefault()
+    
     setIsExpanded(!isExpanded)
+    setIsHovering(true)
     
     if (!isExpanded) {
       document.body.classList.add('card-expanded')
     } else {
       document.body.classList.remove('card-expanded')
+      setIsHovering(false)
     }
   }
 
@@ -105,7 +110,7 @@ export default function ProjectCard({ project, index, totalCards = 3, row = 0 }:
     
     const baseStyles: any = {
       position: 'relative',
-      zIndex: row > 0 ? 150 : 100,
+      zIndex: 200,
     }
     
     if (totalCards === 3) {
@@ -156,7 +161,6 @@ export default function ProjectCard({ project, index, totalCards = 3, row = 0 }:
     return baseStyles
   }
 
-  // Get the actual card height for hover indicator positioning
   const getCardHeight = () => {
     if (isExpanded) return 'auto'
     if (isHovering) return '360px'
@@ -184,13 +188,9 @@ export default function ProjectCard({ project, index, totalCards = 3, row = 0 }:
   return (
     <div 
       className={`relative card-wrapper ${isExpanded ? 'expanded' : ''} ${row > 0 ? 'bottom-row' : 'top-row'}`}
-      onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)}
+      onMouseEnter={() => !isExpanded && setIsHovering(true)}
+      onMouseLeave={() => !isExpanded && setIsHovering(false)}
       data-row={row}
-      style={{
-        // NO fixed min-height here - let card content determine height
-        height: 'auto',
-      }}
     >
       <div 
         ref={cardRef}
@@ -203,7 +203,6 @@ export default function ProjectCard({ project, index, totalCards = 3, row = 0 }:
         }`}
         style={{
           ...getExpansionStyles(),
-          // Dynamic height based on state
           minHeight: getCardHeight(),
           overflow: 'hidden',
         }}
@@ -327,6 +326,7 @@ export default function ProjectCard({ project, index, totalCards = 3, row = 0 }:
             <div className="mt-6">
               <button
                 onClick={handleToggleExpand}
+                onMouseEnter={(e) => e.stopPropagation()}
                 className={`w-full py-3 rounded-xl border ${colors.border} text-sm font-medium ${colors.text} hover:opacity-80 transition-all flex items-center justify-center gap-2 bg-gray-800/50 animate-fade-in`}
               >
                 <ChevronDownIcon className="h-4 w-4" />
@@ -340,6 +340,7 @@ export default function ProjectCard({ project, index, totalCards = 3, row = 0 }:
           <div className="px-10 pb-6">
             <button
               onClick={handleToggleExpand}
+              onMouseEnter={(e) => e.stopPropagation()}
               className={`w-full py-3 rounded-xl border ${colors.border} text-sm font-medium ${colors.text} hover:opacity-80 transition-all flex items-center justify-center gap-2 bg-gray-800/50 animate-fade-in`}
             >
               <ChevronUpIcon className="h-4 w-4" />
@@ -349,16 +350,10 @@ export default function ProjectCard({ project, index, totalCards = 3, row = 0 }:
         )}
       </div>
 
-      {/* Hover Indicator - Positioned at ACTUAL card bottom, not expanded position */}
+      {/* Hover Indicator */}
       {!isExpanded && !isHovering && (
-        <div 
-          className="absolute left-1/2 transform -translate-x-1/2 animate-fade-in hover-indicator"
-          style={{
-            top: '100%', // Position at bottom of actual card
-            marginTop: '4px', // Small gap
-          }}
-        >
-          <div className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-gray-700 text-white text-xs font-medium shadow-lg whitespace-nowrap">
+        <div className="absolute left-1/2 -translate-x-1/2 bottom-[-24px] animate-fade-in hover-indicator pointer-events-none">
+          <div className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-gray-800 border border-gray-700 text-gray-300 text-xs font-medium shadow-lg whitespace-nowrap backdrop-blur-sm">
             <EyeIcon className="h-3 w-3" />
             <span>Hover to view tools</span>
           </div>

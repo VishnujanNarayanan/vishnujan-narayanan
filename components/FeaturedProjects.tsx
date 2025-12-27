@@ -1,3 +1,5 @@
+'use client'
+
 import ProjectCard from './ProjectCard'
 import { projects } from '@/lib/data'
 import Link from 'next/link'
@@ -35,12 +37,15 @@ export default function FeaturedProjects() {
           </div>
         </div>
 
-        <div className="relative projects-grid grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+        <div className="relative projects-grid grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20 pb-8">
           {featuredProjects.map((project, index) => (
             <div 
               key={project.id}
-              className="relative min-h-[280px] transition-all duration-700"
-              style={{ animationDelay: `${index * 0.1}s` }}
+              className="relative min-h-[240px] transition-all duration-300"
+              style={{ 
+                animationDelay: `${index * 0.1}s`,
+                marginTop: '0'
+              }}
             >
               <ProjectCard 
                 project={project} 
