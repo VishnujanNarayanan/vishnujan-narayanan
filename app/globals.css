@@ -146,130 +146,181 @@ body {
 }
 
 /* =========================================== */
-/* HOVER STATE (keep as is) */
+/* HOVER STATE (Desktop Only) */
 /* =========================================== */
 
-/* Top row hover - moves upward */
-.top-row:not(.expanded):hover {
-  min-height: 360px;
-  z-index: 50 !important;
-  transform: translateY(-120px) !important;
-  transition: transform 0.3s ease, min-height 0.3s ease !important;
-}
+/* Top row hover - moves upward (Desktop only) */
+@media (min-width: 1024px) {
+  .top-row:not(.expanded):hover {
+    min-height: 360px;
+    z-index: 50 !important;
+    transform: translateY(-120px) !important;
+    transition: transform 0.3s ease, min-height 0.3s ease !important;
+  }
 
-/* Bottom row hover - normal expansion */
-.bottom-row:not(.expanded):hover {
-  min-height: 360px;
-  z-index: 50 !important;
-}
+  /* Bottom row hover - normal expansion */
+  .bottom-row:not(.expanded):hover {
+    min-height: 360px;
+    z-index: 50 !important;
+  }
 
-/* Hovered card styling */
-.card-wrapper:not(.expanded):hover .card-transition {
-  z-index: 50 !important;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5) !important;
-}
-
-/* =========================================== */
-/* CRITICAL: EXPANDED CARD OVERLAPS WITHOUT MOVING OTHERS */
-/* =========================================== */
-
-/* Expanded card - high z-index, NEGATIVE margin-bottom to overlap */
-.card-wrapper.expanded {
-  min-height: 500px;
-  z-index: 200 !important;
-  transform: none !important; /* Reset hover transform */
-}
-
-.card-wrapper.expanded .card-transition {
-  z-index: 200 !important;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8) !important;
-  margin-bottom: -260px !important; /* Negative margin overlaps bottom row */
+  /* Hovered card styling */
+  .card-wrapper:not(.expanded):hover .card-transition {
+    z-index: 50 !important;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5) !important;
+  }
 }
 
 /* =========================================== */
-/* ABSOLUTE KEY: NO OTHER CARDS MOVE */
+/* MOBILE SPECIFIC FIXES - TAP EXPANDS DOWNWARD */
 /* =========================================== */
 
-/* When ANY card expands, NO OTHER CARDS MOVE */
-.projects-grid:has(.card-wrapper.expanded) > div {
-  /* NO margin adjustments */
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
-  /* NO transform adjustments */
-  transform: none !important;
-}
-
-/* Reset ALL hover adjustments when any card expands */
-.projects-grid:has(.card-wrapper.expanded) .card-wrapper:not(.expanded) {
-  transform: none !important;
-  margin-bottom: 0 !important;
-  margin-top: 0 !important;
-  z-index: 20 !important; /* Reset to default */
-}
-
-/* Bottom row absolutely fixed - doesn't move at all */
-.projects-grid:has(.top-row.expanded) .bottom-row {
-  position: absolute !important;
-  top: auto !important; /* Maintain original position */
-  bottom: auto !important;
-  z-index: 10 !important; /* Lower than expanded card */
-  /* NO movement whatsoever */
-  margin-top: 0 !important;
-  transform: none !important;
-}
-
-/* Top row stays when bottom row expands */
-.projects-grid:has(.bottom-row.expanded) .top-row {
-  position: absolute !important;
-  top: 0 !important; /* Maintain original position */
-  z-index: 10 !important; /* Lower than expanded card */
-  /* NO movement */
-  margin-top: 0 !important;
-  transform: none !important;
-}
-
-/* =========================================== */
-/* TRANSITION MANAGEMENT */
-/* =========================================== */
-
-/* Allow transitions only for hover effects */
-.card-wrapper:not(.expanded) {
-  transition: transform 0.3s ease, min-height 0.3s ease !important;
-}
-
-/* NO transitions when expanded or when grid has expanded card */
-.card-wrapper.expanded,
-.projects-grid:has(.card-wrapper.expanded) .card-wrapper {
-  transition: none !important;
-}
-
-/* NO transitions on grid items */
-.projects-grid > div {
-  transition: none !important;
+/* Mobile - CRITICAL FIX: Prevent ANY upward movement */
+@media (max-width: 1023px) {
+  /* Override ALL upward transforms on mobile */
+  .top-row {
+    transform: none !important;
+    transition: none !important;
+  }
+  
+  .card-wrapper {
+    transform: none !important;
+    transition: min-height 0.3s ease !important;
+  }
+  
+  /* Mobile card expansion - expands downward naturally */
+  .lg\:hidden {
+    transform: none !important;
+    transition: min-height 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+  
+  /* Hide hover indicator on mobile */
+  .hover-indicator {
+    display: none !important;
+  }
+  
+  /* Prevent any mobile interference with desktop styles */
+  .lg\:hidden .card-transition {
+    transform: none !important;
+    transition: min-height 0.3s ease !important;
+  }
+  
+  /* CRITICAL: Disable ALL CSS that moves cards upward on mobile */
+  .projects-grid > div,
+  .projects-grid .card-wrapper,
+  .projects-grid .top-row,
+  .projects-grid .bottom-row {
+    transform: none !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
 }
 
 /* =========================================== */
-/* HOVER INDICATOR */
+/* CRITICAL: EXPANDED CARD OVERLAPS WITHOUT MOVING OTHERS (Desktop only) */
 /* =========================================== */
 
-.hover-indicator {
-  position: absolute;
-  z-index: 5;
-  opacity: 0;
-  animation: fadeIn 0.3s ease-out 0.5s forwards;
-  pointer-events: none;
+@media (min-width: 1024px) {
+  /* Expanded card - high z-index, NEGATIVE margin-bottom to overlap */
+  .card-wrapper.expanded {
+    min-height: 500px;
+    z-index: 200 !important;
+    transform: none !important; /* Reset hover transform */
+  }
+
+  .card-wrapper.expanded .card-transition {
+    z-index: 200 !important;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8) !important;
+    margin-bottom: -260px !important; /* Negative margin overlaps bottom row */
+  }
+
+  /* =========================================== */
+  /* ABSOLUTE KEY: NO OTHER CARDS MOVE (Desktop only) */
+  /* =========================================== */
+
+  /* When ANY card expands, NO OTHER CARDS MOVE */
+  .projects-grid:has(.card-wrapper.expanded) > div {
+    /* NO margin adjustments */
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    /* NO transform adjustments */
+    transform: none !important;
+  }
+
+  /* Reset ALL hover adjustments when any card expands */
+  .projects-grid:has(.card-wrapper.expanded) .card-wrapper:not(.expanded) {
+    transform: none !important;
+    margin-bottom: 0 !important;
+    margin-top: 0 !important;
+    z-index: 20 !important; /* Reset to default */
+  }
+
+  /* Bottom row absolutely fixed - doesn't move at all */
+  .projects-grid:has(.top-row.expanded) .bottom-row {
+    position: absolute !important;
+    top: auto !important; /* Maintain original position */
+    bottom: auto !important;
+    z-index: 10 !important; /* Lower than expanded card */
+    /* NO movement whatsoever */
+    margin-top: 0 !important;
+    transform: none !important;
+  }
+
+  /* Top row stays when bottom row expands */
+  .projects-grid:has(.bottom-row.expanded) .top-row {
+    position: absolute !important;
+    top: 0 !important; /* Maintain original position */
+    z-index: 10 !important; /* Lower than expanded card */
+    /* NO movement */
+    margin-top: 0 !important;
+    transform: none !important;
+  }
+
+  /* =========================================== */
+  /* TRANSITION MANAGEMENT (Desktop only) */
+  /* =========================================== */
+
+  /* Allow transitions only for hover effects */
+  .card-wrapper:not(.expanded) {
+    transition: transform 0.3s ease, min-height 0.3s ease !important;
+  }
+
+  /* NO transitions when expanded or when grid has expanded card */
+  .card-wrapper.expanded,
+  .projects-grid:has(.card-wrapper.expanded) .card-wrapper {
+    transition: none !important;
+  }
+
+  /* NO transitions on grid items */
+  .projects-grid > div {
+    transition: none !important;
+  }
 }
 
-.card-wrapper:not(:hover):not(.expanded) .hover-indicator {
-  opacity: 1;
-  visibility: visible;
-}
+/* =========================================== */
+/* HOVER INDICATOR (Desktop only) */
+/* =========================================== */
 
-.card-wrapper:hover .hover-indicator,
-.card-wrapper.expanded .hover-indicator {
-  opacity: 0 !important;
-  visibility: hidden !important;
-  animation: none;
+@media (min-width: 1024px) {
+  .hover-indicator {
+    position: absolute;
+    z-index: 5;
+    opacity: 0;
+    animation: fadeIn 0.3s ease-out 0.5s forwards;
+    pointer-events: none;
+  }
+
+  .card-wrapper:not(:hover):not(.expanded) .hover-indicator {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .card-wrapper:hover .hover-indicator,
+  .card-wrapper.expanded .hover-indicator {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    animation: none;
+  }
 }
 
 /* =========================================== */
@@ -284,8 +335,10 @@ body {
   z-index: 10;
 }
 
-.card-wrapper:not(.expanded):hover {
-  z-index: 50;
+@media (min-width: 1024px) {
+  .card-wrapper:not(.expanded):hover {
+    z-index: 50;
+  }
 }
 
 .card-wrapper.expanded {
