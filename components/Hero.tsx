@@ -7,7 +7,7 @@ import Image from 'next/image'
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen w-full flex flex-col justify-center overflow-hidden bg-[#030712] text-white pt-16 lg:pt-0 lg:h-screen">
+    <section className="relative min-h-screen w-full flex flex-col justify-center overflow-hidden bg-[#030712] text-white pt-12 lg:pt-0 lg:h-screen">
       
       {/* 1. ENHANCED BACKGROUND WITH RANDOM TECH PATTERN (from second version) */}
       <div className="absolute inset-0 z-0 pointer-events-none">
@@ -56,7 +56,7 @@ export default function Hero() {
       </div>
 
       {/* MOBILE: PHOTO AT TOP */}
-      <div className="block lg:hidden w-full pt-8">
+      <div className="block lg:hidden w-full pt-6">
         <div className="relative p-2 rounded-full border-[2px] border-cyan-400 shadow-[0_0_30px_rgba(34,211,238,0.25)] bg-cyan-400/5 mx-auto w-48 h-48 md:w-64 md:h-64">
           <div className="w-full h-full rounded-full overflow-hidden border-2 border-[#030712]">
             <Image
@@ -71,26 +71,26 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="relative z-10 w-full px-4 lg:px-8 flex flex-col lg:flex-row items-start">
+      <div className="relative z-10 w-full px-4 lg:px-8 flex flex-col lg:flex-row items-start lg:items-center lg:-mt-8">
         
         {/* LEFT COLUMN: IMAGE + "I ARCHITECT" TEXT + DOWNLOAD CV */}
-        <div className="hidden lg:flex flex-col items-start w-[35%] max-w-sm">
+        <div className="hidden lg:flex flex-col items-end w-[30%] max-w-sm">
           {/* Image on far left */}
-          <div className="relative p-2 rounded-full border-[2px] border-cyan-400 shadow-[0_0_50px_rgba(34,211,238,0.25)] bg-cyan-400/5">
-            <div className="w-64 h-64 md:w-72 md:h-72 rounded-full overflow-hidden border-2 border-[#030712]">
+          <div className="relative p-1.5 rounded-full border-[1.5px] border-cyan-400 shadow-[0_0_40px_rgba(34,211,238,0.2)] bg-cyan-400/5">
+            <div className="w-56 h-56 md:w-64 md:h-64 rounded-full overflow-hidden border border-[#030712]">
               <Image
                 src="/profile.jpg"
                 alt="Vishnujan Narayanan"
-                width={288}
-                height={288}
+                width={256}
+                height={256}
                 className="w-full h-full object-cover"
                 priority
               />
             </div>
           </div>
 
-          {/* "I architect..." text UNDER the image */}
-          <div className="mt-8 w-full">
+          {/* "I architect..." text UNDER the image - RIGHT ALIGNED */}
+          <div className="mt-6 w-full text-right">
             <p className="text-sm text-gray-300 leading-relaxed">
               I architect <span className="bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent font-bold">end-to-end AI systems</span> and robust 
               <span className="bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent font-bold"> data pipelines</span>, specialized in translating 
@@ -98,28 +98,28 @@ export default function Hero() {
             </p>
           </div>
 
-          {/* Download CV UNDER the text */}
+          {/* Download CV UNDER the text - RIGHT ALIGNED */}
           <a 
             href="https://drive.google.com/file/d/1e6nA8vGph-R66XYy-tDq1943vfBeEemQ/view?usp=drive_link" 
             target="_blank"
-            className="group inline-flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.2em] text-white bg-white/5 border border-white/10 px-6 py-3 rounded hover:bg-white hover:text-black transition-all mt-6 w-full justify-center"
+            className="group inline-flex items-center justify-end gap-3 text-[10px] font-black uppercase tracking-[0.2em] text-white bg-white/5 border border-white/10 px-6 py-3 rounded hover:bg-white hover:text-black transition-all mt-5"
           >
             <ArrowDownTrayIcon className="h-4 w-4 transition-transform group-hover:-translate-y-1" />
             Download CV
           </a>
         </div>
 
-        {/* MIDDLE COLUMN: MAIN TEXT CONTENT - Close to image */}
-        <div className="flex-1 lg:w-[40%] order-2 lg:order-1 lg:pl-6"> {/* Balanced: pl-6 */}
+        {/* MIDDLE COLUMN: MAIN TEXT CONTENT - Bigger section, shifted up */}
+        <div className="flex-1 lg:w-[50%] order-2 lg:order-1 lg:pl-8 lg:-mt-4">
           
-          <div className="space-y-4 lg:space-y-5">
-            {/* "Hi, I'm" and Name - Close to image */}
+          <div className="space-y-4 lg:space-y-6">
+            {/* "Hi, I'm" and Name - Shifted up */}
             <div className="text-center lg:text-left">
               <h2 className="text-lg lg:text-xl font-medium text-gray-300 mb-2">
                 Hi, I&apos;m
               </h2>
               
-              <h1 className="text-4xl md:text-6xl lg:text-[75px] font-bold tracking-tight leading-[0.85]">
+              <h1 className="text-4xl md:text-6xl lg:text-[85px] font-bold tracking-tight leading-[0.85]">
                 <span className="bg-gradient-to-r from-blue-500 via-blue-400 to-cyan-400 bg-clip-text text-transparent">
                   Vishnujan <br /> Narayanan
                 </span>
@@ -127,14 +127,14 @@ export default function Hero() {
             </div>
 
             {/* "AI Engineer" - DIRECTLY under name */}
-            <div className="text-center lg:text-left -mt-1">
+            <div className="text-center lg:text-left -mt-2">
               <p className="text-lg md:text-xl lg:text-2xl font-medium text-white tracking-tight">
                 AI Engineer & Software Developer
               </p>
             </div>
 
             {/* Horizontal line divider */}
-            <div className="hidden lg:block w-12 h-px bg-gray-600 mt-4 mb-4"></div>
+            <div className="hidden lg:block w-14 h-px bg-gray-600 mt-3 mb-4"></div>
 
             {/* "Building intelligent systems" */}
             <div className="text-center lg:text-left space-y-1">
@@ -146,7 +146,7 @@ export default function Hero() {
               </h2>
             </div>
 
-            {/* CTA BUTTONS */}
+            {/* CTA BUTTON - REMOVED CONTACT BUTTON */}
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 lg:gap-6 pt-4">
               <Link 
                 href="#projects" 
@@ -156,14 +156,6 @@ export default function Hero() {
                   <ArrowRightIcon className="h-5 w-5 text-blue-600" />
                 </div>
                 <span className="font-bold uppercase tracking-widest text-xs lg:text-[11px]">Explore My Work</span>
-              </Link>
-
-              {/* CONTACT BUTTON */}
-              <Link 
-                href="#contact" 
-                className="group hidden lg:inline-flex items-center justify-center gap-3 text-white bg-white/5 border border-white/10 hover:bg-white/10 px-6 py-3 rounded-full transition-all duration-300"
-              >
-                <span className="font-bold uppercase tracking-widest text-[11px]">Contact</span>
               </Link>
 
               {/* MOBILE: CV BUTTON AND SOCIAL */}
@@ -194,8 +186,8 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* RIGHT COLUMN: QUICK LINKS BUTTONS - Good space from text */}
-        <div className="hidden lg:flex flex-col items-end w-[25%] order-2 lg:pl-12"> {/* Balanced: pl-12 */}
+        {/* RIGHT COLUMN: QUICK LINKS BUTTONS */}
+        <div className="hidden lg:flex flex-col items-end w-[20%] order-2 lg:pl-12 lg:-mt-4">
           <div className="w-full space-y-4">
             <h3 className="text-xs font-black uppercase tracking-[0.3em] text-gray-400 mb-4 text-right">
               Quick Links
