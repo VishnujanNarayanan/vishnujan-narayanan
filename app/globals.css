@@ -214,6 +214,11 @@ body {
     margin-top: 0 !important;
     margin-bottom: 0 !important;
   }
+  
+  /* MOBILE Z-INDEX FIX: Allow mobile cards to have their own z-index */
+  .card-wrapper .lg\:hidden {
+    z-index: auto !important; /* Remove inherited z-index */
+  }
 }
 
 /* =========================================== */
@@ -324,25 +329,36 @@ body {
 }
 
 /* =========================================== */
-/* Z-INDEX LAYERING */
+/* Z-INDEX LAYERING - DESKTOP ONLY */
 /* =========================================== */
 
-.card-wrapper {
-  z-index: 20;
-}
-
-.bottom-row {
-  z-index: 10;
-}
-
 @media (min-width: 1024px) {
+  .card-wrapper {
+    z-index: 20;
+  }
+  
+  .bottom-row {
+    z-index: 10;
+  }
+  
   .card-wrapper:not(.expanded):hover {
     z-index: 50;
   }
+  
+  .card-wrapper.expanded {
+    z-index: 200;
+  }
 }
 
-.card-wrapper.expanded {
-  z-index: 200;
+/* Mobile: Let inline styles control z-index */
+@media (max-width: 1023px) {
+  .card-wrapper {
+    z-index: auto !important;
+  }
+  
+  .card-wrapper .lg\:hidden {
+    position: relative; /* Ensure z-index works properly */
+  }
 }
 
 /* =========================================== */
