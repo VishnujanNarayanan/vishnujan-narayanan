@@ -21,6 +21,9 @@ interface ProjectCardProps {
   isMobileExpanded?: boolean
   onMobileTap?: () => void
   resetExpandedMobile?: () => void
+  // Add new props for single expanded state
+  expandedCardId?: number | null
+  onCardExpand?: (projectId: number | null) => void
 }
 
 const colorClasses = {
@@ -78,7 +81,10 @@ export default function ProjectCard({
   // Make these props optional
   isMobileExpanded,
   onMobileTap,
-  resetExpandedMobile
+  resetExpandedMobile,
+  // New props for single expanded state
+  expandedCardId,
+  onCardExpand
 }: ProjectCardProps) {
   const [isExpanded, setIsExpanded] = useState(false)
   const [isHovering, setIsHovering] = useState(false)
@@ -90,8 +96,10 @@ export default function ProjectCard({
   const mobileCardRef = useRef<HTMLDivElement>(null)
   
   // Determine if mobile card is expanded
-  // Use prop if provided, otherwise use local state
-  const mobileExpanded = isMobileExpanded !== undefined ? isMobileExpanded : localMobileExpanded
+  // Use expandedCardId prop if provided, otherwise check local state
+  const isCardExpanded = expandedCardId !== undefined 
+    ? expandedCardId === project.id 
+    : (isMobileExpanded !== undefined ? isMobileExpanded : localMobileExpanded)
   
   useEffect(() => {
     const colors: ColorKey[] = ['blue', 'purple', 'cyan', 'green', 'orange', 'pink']
@@ -118,8 +126,15 @@ export default function ProjectCard({
   }
 
   const handleMobileTap = () => {
-    if (onMobileTap) {
-      // Use parent-controlled state
+    if (onCardExpand) {
+      // Use global single-expanded state
+      if (isCardExpanded) {
+        onCardExpand(null) // Collapse current card
+      } else {
+        onCardExpand(project.id) // Expand this card
+      }
+    } else if (onMobileTap) {
+      // Use parent-controlled state (backward compatibility)
       onMobileTap()
     } else {
       // Use local state
@@ -239,6 +254,19 @@ export default function ProjectCard({
       document.removeEventListener('mousedown', handleClickOutside)
     }
   }, [isMobileDialogOpen])
+
+  // Scroll to expanded card on mobile
+  useEffect(() => {
+    if (isCardExpanded && mobileCardRef.current) {
+      // Small delay to ensure DOM is updated
+      setTimeout(() => {
+        mobileCardRef.current?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest',
+        })
+      }, 100)
+    }
+  }, [isCardExpanded])
 
   return (
     <>
@@ -407,16 +435,16 @@ export default function ProjectCard({
           )}
         </div>
 
-        {/* Mobile Card - Simple tap behavior */}
+        {/* Mobile Card - Higher z-index when expanded */}
         <div 
           ref={mobileCardRef}
           className={`lg:hidden bg-gray-900 rounded-2xl border transition-all duration-300 ${
-            mobileExpanded 
-              ? `${colors.border} shadow-xl scale-[1.02] z-10 mb-6` 
-              : 'border-gray-800 shadow-sm'
+            isCardExpanded 
+              ? `${colors.border} shadow-xl scale-[1.02] z-50 mb-6` // Higher z-index when expanded
+              : 'border-gray-800 shadow-sm z-10' // Lower z-index when not expanded
           }`}
           style={{
-            minHeight: mobileExpanded ? '360px' : '240px',
+            minHeight: isCardExpanded ? '360px' : '240px',
             overflow: 'hidden',
           }}
           onClick={handleMobileTap}
@@ -442,7 +470,7 @@ export default function ProjectCard({
             </div>
 
             {/* Show technologies when expanded */}
-            {mobileExpanded && (
+            {isCardExpanded && (
               <>
                 <div className="mb-6 animate-fade-in">
                   <h4 className="font-semibold text-white mb-3 text-sm">
@@ -473,7 +501,7 @@ export default function ProjectCard({
           </div>
 
           {/* Simple hint when not expanded */}
-          {!mobileExpanded && (
+          {!isCardExpanded && (
             <div className="px-6 pb-4 text-center">
               <div className="flex items-center justify-center gap-1 text-xs text-gray-400">
                 <EyeIcon className="h-3 w-3" />
