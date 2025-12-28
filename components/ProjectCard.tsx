@@ -435,17 +435,18 @@ export default function ProjectCard({
           )}
         </div>
 
-        {/* Mobile Card - Higher z-index when expanded */}
+        {/* MOBILE CARD - SIMPLIFIED AND FIXED */}
         <div 
           ref={mobileCardRef}
-          className={`lg:hidden bg-gray-900 rounded-2xl border transition-all duration-300 ${
+          className={`lg:hidden bg-gray-900 rounded-2xl border transition-all duration-300 relative ${
             isCardExpanded 
-              ? `${colors.border} shadow-xl scale-[1.02] z-50 mb-6` // Higher z-index when expanded
-              : 'border-gray-800 shadow-sm z-10' // Lower z-index when not expanded
+              ? `${colors.border} shadow-xl scale-[1.02] z-50 mb-6` 
+              : 'border-gray-800 shadow-sm z-10'
           }`}
           style={{
             minHeight: isCardExpanded ? '360px' : '240px',
             overflow: 'hidden',
+            width: '100%',
           }}
           onClick={handleMobileTap}
         >

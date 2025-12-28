@@ -134,15 +134,41 @@ body {
   min-height: 240px;
 }
 
-/* Card wrapper - fixed positioning */
-.card-wrapper {
-  position: absolute; /* ABSOLUTE positioning - doesn't affect layout */
-  top: 0;
-  left: 0;
-  right: 0;
-  height: auto;
-  min-height: 240px;
-  overflow: visible !important;
+/* Card wrapper - fixed positioning for DESKTOP ONLY */
+@media (min-width: 1024px) {
+  .card-wrapper {
+    position: absolute; /* ABSOLUTE positioning - doesn't affect layout */
+    top: 0;
+    left: 0;
+    right: 0;
+    height: auto;
+    min-height: 240px;
+    overflow: visible !important;
+  }
+}
+
+/* MOBILE: Use relative positioning instead of absolute */
+@media (max-width: 1023px) {
+  .card-wrapper {
+    position: relative !important;
+    width: 100% !important;
+    margin-bottom: 1rem !important;
+    z-index: auto !important;
+  }
+  
+  /* Ensure mobile cards stack properly */
+  .projects-grid > div {
+    position: relative !important;
+    min-height: auto !important;
+    margin-bottom: 1rem !important;
+  }
+  
+  /* Reset all desktop-specific positioning for mobile */
+  .projects-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1rem !important;
+  }
 }
 
 /* =========================================== */
@@ -172,26 +198,17 @@ body {
 }
 
 /* =========================================== */
-/* MOBILE SPECIFIC FIXES - TAP EXPANDS DOWNWARD */
+/* MOBILE SPECIFIC FIXES - SIMPLIFIED */
 /* =========================================== */
 
-/* Mobile - CRITICAL FIX: Prevent ANY upward movement */
 @media (max-width: 1023px) {
-  /* Override ALL upward transforms on mobile */
-  .top-row {
-    transform: none !important;
-    transition: none !important;
-  }
-  
+  /* Disable ALL hover effects on mobile */
+  .top-row,
+  .bottom-row,
   .card-wrapper {
     transform: none !important;
-    transition: min-height 0.3s ease !important;
-  }
-  
-  /* Mobile card expansion - expands downward naturally */
-  .lg\:hidden {
-    transform: none !important;
-    transition: min-height 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
   }
   
   /* Hide hover indicator on mobile */
@@ -199,25 +216,22 @@ body {
     display: none !important;
   }
   
-  /* Prevent any mobile interference with desktop styles */
-  .lg\:hidden .card-transition {
+  /* Mobile cards should expand naturally */
+  .lg\:hidden {
     transform: none !important;
-    transition: min-height 0.3s ease !important;
+    transition: min-height 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
   }
   
-  /* CRITICAL: Disable ALL CSS that moves cards upward on mobile */
-  .projects-grid > div,
-  .projects-grid .card-wrapper,
-  .projects-grid .top-row,
-  .projects-grid .bottom-row {
-    transform: none !important;
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
+  /* MOBILE EXPANDED CARD - MUST BE ON TOP */
+  .lg\:hidden.z-50 {
+    position: relative;
+    z-index: 50 !important;
   }
   
-  /* MOBILE Z-INDEX FIX: Allow mobile cards to have their own z-index */
-  .card-wrapper .lg\:hidden {
-    z-index: auto !important; /* Remove inherited z-index */
+  /* Mobile collapsed cards */
+  .lg\:hidden.z-10 {
+    position: relative;
+    z-index: 10 !important;
   }
 }
 
@@ -347,17 +361,6 @@ body {
   
   .card-wrapper.expanded {
     z-index: 200;
-  }
-}
-
-/* Mobile: Let inline styles control z-index */
-@media (max-width: 1023px) {
-  .card-wrapper {
-    z-index: auto !important;
-  }
-  
-  .card-wrapper .lg\:hidden {
-    position: relative; /* Ensure z-index works properly */
   }
 }
 
