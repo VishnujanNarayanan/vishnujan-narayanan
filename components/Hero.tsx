@@ -98,7 +98,7 @@ export default function Hero() {
           {/* "Building intelligent systems" text UNDER the image - BIGGER SIZE */}
           <div className="mt-6 w-full text-right">
             <div className="space-y-0">
-              <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent tracking-tight leading-tight">
+              <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent tracking-tight leading-tight">
                 Building intelligent<br />systems
               </h2>
               <h2 className="text-3xl font-bold text-gray-400 tracking-tight leading-tight">
