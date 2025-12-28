@@ -1,7 +1,7 @@
 'use client'
 
 import { ArrowRightIcon, ArrowDownTrayIcon } from '@heroicons/react/24/outline'
-import { Github, Linkedin, Mail, Cpu, Share2 } from 'lucide-react'
+import { Github, Linkedin, Mail, Cpu, Share2, Briefcase, Code, User, Phone } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -71,120 +71,142 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 lg:px-6 w-full flex flex-col lg:flex-row items-center justify-between gap-4 lg:gap-8">
+      <div className="relative z-10 w-full px-4 lg:px-8 flex flex-col lg:flex-row items-start">
         
-        {/* LEFT CONTENT - MOBILE REORDERED */}
-        <div className="flex-1 space-y-6 lg:-mt-20 lg:-mt-24 order-2 lg:order-1"> {/* SHIFTED UP MORE on desktop only */}
-          
-          {/* Mobile: Text centered */}
-          <div className="text-center lg:text-left space-y-4">
-            <h1 className="text-4xl md:text-6xl lg:text-[90px] font-bold tracking-tight leading-[0.9]"> {/* Reduced size */}
-              <span className="text-white">Hi, I&apos;m</span> <br />
-              <span className="bg-gradient-to-r from-blue-500 via-blue-400 to-cyan-400 bg-clip-text text-transparent">
-                Vishnujan <br className="hidden lg:block" /> Narayanan
-              </span>
-            </h1>
-            
-            {/* CHANGED TO WHITE */}
-            <p className="text-lg md:text-xl lg:text-2xl font-medium text-white tracking-tight">
-              AI Engineer & Software Developer
-            </p>
-          </div>
-
-          {/* ADDED BACK: Building intelligent systems part - NOW BLUE */}
-          <div className="space-y-1 pt-2 text-center lg:text-left">
-            <h2 className="text-xl md:text-2xl lg:text-4xl font-bold bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent tracking-tight">
-              Building intelligent systems
-            </h2>
-            <h2 className="text-xl md:text-2xl lg:text-4xl font-bold text-gray-400 tracking-tight">
-              with real-world impact
-            </h2>
-          </div>
-
-          {/* MOBILE BIO (shown after text) */}
-          <div className="block lg:hidden pt-4 text-center">
-            <p className="text-sm text-gray-400 leading-relaxed max-w-md mx-auto">
-              I architect <span className="bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent font-bold tracking-tight">end-to-end AI systems</span> and robust 
-              <span className="bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent font-bold tracking-tight"> data pipelines</span>, specialized in translating 
-              complex data into production software.
-            </p>
-          </div>
-
-          {/* INSTANTLY VISIBLE CTA - MOBILE OPTIMIZED */}
-          <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 lg:gap-6 pt-6">
-            <Link 
-              href="#projects" 
-              className="group relative inline-flex items-center justify-center gap-3 bg-blue-600 hover:bg-white hover:text-blue-600 pl-4 pr-6 py-3 lg:pl-2 lg:pr-8 lg:py-2 rounded-full transition-all duration-300 shadow-[0_0_20px_rgba(37,99,235,0.4)] w-full sm:w-auto"
-            >
-              <div className="h-10 w-10 rounded-full bg-white flex items-center justify-center transition-transform group-hover:rotate-45">
-                <ArrowRightIcon className="h-5 w-5 text-blue-600" />
-              </div>
-              <span className="font-black uppercase tracking-widest text-[10px]">Explore My Work</span>
-            </Link>
-
-            {/* MOBILE: CV BUTTON AND SOCIAL */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 lg:hidden w-full sm:w-auto">
-              <a 
-                href="https://drive.google.com/file/d/1e6nA8vGph-R66XYy-tDq1943vfBeEemQ/view?usp=drive_link" 
-                target="_blank"
-                className="group inline-flex items-center justify-center gap-2 text-sm font-medium text-white bg-white/10 border border-white/20 px-5 py-2.5 rounded hover:bg-white hover:text-black transition-all w-full sm:w-auto"
-              >
-                <ArrowDownTrayIcon className="h-4 w-4 transition-transform group-hover:-translate-y-1" />
-                Download CV
-              </a>
-
-              <div className="flex items-center gap-1 p-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
-                <SocialIcon href="https://github.com/VishnujanNarayanan" icon={<Github size={16} />} />
-                <SocialIcon href="https://www.linkedin.com/in/vishnujan-narayanan" icon={<Linkedin size={16} />} />
-                <SocialIcon href="mailto:narayanan.vishnujan@gmail.com" icon={<Mail size={16} />} />
-              </div>
-            </div>
-
-            {/* DESKTOP SOCIAL DOCK */}
-            <div className="hidden lg:flex items-center gap-1 p-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
-              <SocialIcon href="https://github.com/VishnujanNarayanan" icon={<Github size={18} />} />
-              <SocialIcon href="https://www.linkedin.com/in/vishnujan-narayanan" icon={<Linkedin size={18} />} />
-              <SocialIcon href="mailto:narayanan.vishnujan@gmail.com" icon={<Mail size={18} />} />
-            </div>
-          </div>
-        </div>
-
-        {/* DESKTOP RIGHT CONTENT: EXACTLY THE SAME AS BEFORE */}
-        <div className="hidden lg:flex lg:w-[450px] flex-col items-center lg:items-end gap-8">
-          {/* Circular Profile with Cyan Glow */}
+        {/* LEFT COLUMN: IMAGE + "I ARCHITECT" TEXT + DOWNLOAD CV */}
+        <div className="hidden lg:flex flex-col items-start w-[35%] max-w-sm">
+          {/* Image on far left */}
           <div className="relative p-2 rounded-full border-[2px] border-cyan-400 shadow-[0_0_50px_rgba(34,211,238,0.25)] bg-cyan-400/5">
-            <div className="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-2 border-[#030712]">
+            <div className="w-64 h-64 md:w-72 md:h-72 rounded-full overflow-hidden border-2 border-[#030712]">
               <Image
                 src="/profile.jpg"
                 alt="Vishnujan Narayanan"
-                width={320}
-                height={320}
+                width={288}
+                height={288}
                 className="w-full h-full object-cover"
                 priority
               />
             </div>
-            {/* Tech Icon Overlay */}
-            <div className="absolute top-4 right-4 h-12 w-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center">
-              <Cpu className="h-6 w-6 text-cyan-400" />
-            </div>
           </div>
 
-          {/* Targeted Bio - NOW WITH BLUE TEXT */}
-          <div className="text-center lg:text-right space-y-6">
-            <p className="text-sm md:text-base text-gray-400 leading-relaxed max-w-[320px] ml-auto">
-              I architect <span className="bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent font-bold tracking-tight">end-to-end AI systems</span> and robust 
-              <span className="bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent font-bold tracking-tight"> data pipelines</span>, specialized in translating 
+          {/* "I architect..." text UNDER the image */}
+          <div className="mt-8 w-full">
+            <p className="text-sm text-gray-300 leading-relaxed">
+              I architect <span className="bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent font-bold">end-to-end AI systems</span> and robust 
+              <span className="bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent font-bold"> data pipelines</span>, specialized in translating 
               complex data into production software.
             </p>
+          </div>
 
-            <a 
-              href="https://drive.google.com/file/d/1e6nA8vGph-R66XYy-tDq1943vfBeEemQ/view?usp=drive_link" 
-              target="_blank"
-              className="group inline-flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.2em] text-white bg-white/5 border border-white/10 px-6 py-3 rounded hover:bg-white hover:text-black transition-all"
-            >
-              <ArrowDownTrayIcon className="h-4 w-4 transition-transform group-hover:-translate-y-1" />
-              Download CV
-            </a>
+          {/* Download CV UNDER the text */}
+          <a 
+            href="https://drive.google.com/file/d/1e6nA8vGph-R66XYy-tDq1943vfBeEemQ/view?usp=drive_link" 
+            target="_blank"
+            className="group inline-flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.2em] text-white bg-white/5 border border-white/10 px-6 py-3 rounded hover:bg-white hover:text-black transition-all mt-6 w-full justify-center"
+          >
+            <ArrowDownTrayIcon className="h-4 w-4 transition-transform group-hover:-translate-y-1" />
+            Download CV
+          </a>
+        </div>
+
+        {/* MIDDLE COLUMN: MAIN TEXT CONTENT - Close to image */}
+        <div className="flex-1 lg:w-[40%] order-2 lg:order-1 lg:pl-6"> {/* Balanced: pl-6 */}
+          
+          <div className="space-y-4 lg:space-y-5">
+            {/* "Hi, I'm" and Name - Close to image */}
+            <div className="text-center lg:text-left">
+              <h2 className="text-lg lg:text-xl font-medium text-gray-300 mb-2">
+                Hi, I&apos;m
+              </h2>
+              
+              <h1 className="text-4xl md:text-6xl lg:text-[75px] font-bold tracking-tight leading-[0.85]">
+                <span className="bg-gradient-to-r from-blue-500 via-blue-400 to-cyan-400 bg-clip-text text-transparent">
+                  Vishnujan <br /> Narayanan
+                </span>
+              </h1>
+            </div>
+
+            {/* "AI Engineer" - DIRECTLY under name */}
+            <div className="text-center lg:text-left -mt-1">
+              <p className="text-lg md:text-xl lg:text-2xl font-medium text-white tracking-tight">
+                AI Engineer & Software Developer
+              </p>
+            </div>
+
+            {/* Horizontal line divider */}
+            <div className="hidden lg:block w-12 h-px bg-gray-600 mt-4 mb-4"></div>
+
+            {/* "Building intelligent systems" */}
+            <div className="text-center lg:text-left space-y-1">
+              <h2 className="text-xl md:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent tracking-tight">
+                Building intelligent systems
+              </h2>
+              <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-400 tracking-tight">
+                with real-world impact
+              </h2>
+            </div>
+
+            {/* CTA BUTTONS */}
+            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 lg:gap-6 pt-4">
+              <Link 
+                href="#projects" 
+                className="group relative inline-flex items-center justify-center lg:justify-start gap-3 bg-blue-600 hover:bg-white hover:text-blue-600 pl-4 pr-6 py-3 lg:pl-3 lg:pr-8 lg:py-3 rounded-full transition-all duration-300 shadow-[0_0_20px_rgba(37,99,235,0.4)]"
+              >
+                <div className="h-10 w-10 rounded-full bg-white flex items-center justify-center transition-transform group-hover:rotate-45">
+                  <ArrowRightIcon className="h-5 w-5 text-blue-600" />
+                </div>
+                <span className="font-bold uppercase tracking-widest text-xs lg:text-[11px]">Explore My Work</span>
+              </Link>
+
+              {/* CONTACT BUTTON */}
+              <Link 
+                href="#contact" 
+                className="group hidden lg:inline-flex items-center justify-center gap-3 text-white bg-white/5 border border-white/10 hover:bg-white/10 px-6 py-3 rounded-full transition-all duration-300"
+              >
+                <span className="font-bold uppercase tracking-widest text-[11px]">Contact</span>
+              </Link>
+
+              {/* MOBILE: CV BUTTON AND SOCIAL */}
+              <div className="flex flex-col sm:flex-row items-center gap-4 lg:hidden">
+                <a 
+                  href="https://drive.google.com/file/d/1e6nA8vGph-R66XYy-tDq1943vfBeEemQ/view?usp=drive_link" 
+                  target="_blank"
+                  className="inline-flex items-center gap-2 text-sm font-medium text-white bg-white/10 border border-white/20 px-5 py-2.5 rounded hover:bg-white hover:text-black transition-all"
+                >
+                  <ArrowDownTrayIcon className="h-4 w-4" />
+                  Download CV
+                </a>
+
+                <div className="flex items-center gap-1 p-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
+                  <SocialIcon href="https://github.com/VishnujanNarayanan" icon={<Github size={16} />} />
+                  <SocialIcon href="https://www.linkedin.com/in/vishnujan-narayanan" icon={<Linkedin size={16} />} />
+                  <SocialIcon href="mailto:narayanan.vishnujan@gmail.com" icon={<Mail size={16} />} />
+                </div>
+              </div>
+
+              {/* DESKTOP SOCIAL DOCK */}
+              <div className="hidden lg:flex items-center gap-1 p-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
+                <SocialIcon href="https://github.com/VishnujanNarayanan" icon={<Github size={18} />} />
+                <SocialIcon href="https://www.linkedin.com/in/vishnujan-narayanan" icon={<Linkedin size={18} />} />
+                <SocialIcon href="mailto:narayanan.vishnujan@gmail.com" icon={<Mail size={18} />} />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* RIGHT COLUMN: QUICK LINKS BUTTONS - Good space from text */}
+        <div className="hidden lg:flex flex-col items-end w-[25%] order-2 lg:pl-12"> {/* Balanced: pl-12 */}
+          <div className="w-full space-y-4">
+            <h3 className="text-xs font-black uppercase tracking-[0.3em] text-gray-400 mb-4 text-right">
+              Quick Links
+            </h3>
+            
+            <div className="space-y-3">
+              <SideButton href="#projects" icon={<Code size={16} />} text="Projects" />
+              <SideButton href="#experience" icon={<Briefcase size={16} />} text="Work Experience" />
+              <SideButton href="#skills" icon={<User size={16} />} text="Skills" />
+              <SideButton href="#contact" icon={<Phone size={16} />} text="Contact" />
+            </div>
           </div>
         </div>
       </div>
@@ -207,5 +229,19 @@ function SocialIcon({ href, icon }: { href: string; icon: React.ReactNode }) {
     >
       {icon}
     </a>
+  )
+}
+
+function SideButton({ href, icon, text }: { href: string; icon: React.ReactNode; text: string }) {
+  return (
+    <Link
+      href={href}
+      className="group flex items-center justify-end gap-3 text-white bg-white/5 border border-white/10 px-4 py-3 rounded-lg hover:bg-white/10 hover:border-cyan-400/30 transition-all duration-300"
+    >
+      <span className="text-xs font-medium uppercase tracking-widest">{text}</span>
+      <div className="p-2 rounded-full bg-white/10 group-hover:bg-cyan-400/20 transition-colors">
+        {icon}
+      </div>
+    </Link>
   )
 }
