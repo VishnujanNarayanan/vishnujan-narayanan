@@ -45,13 +45,19 @@ export default function Hero() {
         </h1>
       </div>
 
-      {/* 3. TOP RIGHT BADGE - MOBILE OPTIMIZED */}
+      {/* 3. REPLACED BADGE WITH NEXT.js INFO */}
       <div className="absolute top-4 right-4 lg:top-8 lg:right-8 z-30">
-        <div className="bg-blue-600/90 backdrop-blur-sm px-3 py-1 lg:px-4 lg:py-1 rounded lg:rounded border border-blue-400/30">
-          <span className="text-[8px] lg:text-[9px] font-black uppercase tracking-[0.15em] lg:tracking-[0.2em] text-white">
-            <span className="lg:hidden">Open for roles</span>
-            <span className="hidden lg:inline">Open for machine learning & data roles</span>
+        <div className="bg-white/10 backdrop-blur-sm px-3 py-1.5 lg:px-4 lg:py-2 rounded-lg border border-white/20 flex items-center gap-2">
+          <span className="text-[8px] lg:text-[9px] font-medium text-gray-300">
+            Built with Next.js
           </span>
+          <a 
+            href="https://github.com/VishnujanNarayanan/vishnujan-narayanan" 
+            target="_blank"
+            className="text-gray-400 hover:text-white transition-colors"
+          >
+            <Github size={12} />
+          </a>
         </div>
       </div>
 
@@ -73,7 +79,7 @@ export default function Hero() {
 
       <div className="relative z-10 w-full px-4 lg:px-8 flex flex-col lg:flex-row items-start lg:items-center lg:-mt-8">
         
-        {/* LEFT COLUMN: IMAGE + "I ARCHITECT" TEXT + DOWNLOAD CV */}
+        {/* LEFT COLUMN: IMAGE + "BUILDING INTELLIGENT SYSTEMS" TEXT + DOWNLOAD CV */}
         <div className="hidden lg:flex flex-col items-end w-[30%] max-w-sm">
           {/* Image on far left */}
           <div className="relative p-1.5 rounded-full border-[1.5px] border-cyan-400 shadow-[0_0_40px_rgba(34,211,238,0.2)] bg-cyan-400/5">
@@ -89,31 +95,34 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* "I architect..." text UNDER the image - RIGHT ALIGNED */}
+          {/* "Building intelligent systems" text UNDER the image - BIGGER SIZE */}
           <div className="mt-6 w-full text-right">
-            <p className="text-sm text-gray-300 leading-relaxed">
-              I architect <span className="bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent font-bold">end-to-end AI systems</span> and robust 
-              <span className="bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent font-bold"> data pipelines</span>, specialized in translating 
-              complex data into production software.
-            </p>
+            <div className="space-y-0">
+              <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent tracking-tight leading-tight">
+                Building intelligent<br />systems
+              </h2>
+              <h2 className="text-3xl font-bold text-gray-400 tracking-tight leading-tight">
+                with real-world<br />impact
+              </h2>
+            </div>
           </div>
 
-          {/* Download CV UNDER the text - RIGHT ALIGNED */}
+          {/* Download CV UNDER the text */}
           <a 
             href="https://drive.google.com/file/d/1e6nA8vGph-R66XYy-tDq1943vfBeEemQ/view?usp=drive_link" 
             target="_blank"
-            className="group inline-flex items-center justify-end gap-3 text-[10px] font-black uppercase tracking-[0.2em] text-white bg-white/5 border border-white/10 px-6 py-3 rounded hover:bg-white hover:text-black transition-all mt-5"
+            className="group inline-flex items-center justify-end gap-2 text-[10px] font-bold uppercase tracking-[0.15em] text-white bg-white/5 border border-white/10 px-5 py-2.5 rounded hover:bg-white hover:text-black transition-all mt-6"
           >
-            <ArrowDownTrayIcon className="h-4 w-4 transition-transform group-hover:-translate-y-1" />
+            <ArrowDownTrayIcon className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-1" />
             Download CV
           </a>
         </div>
 
-        {/* MIDDLE COLUMN: MAIN TEXT CONTENT - Bigger section, shifted up */}
+        {/* MIDDLE COLUMN: MAIN TEXT CONTENT */}
         <div className="flex-1 lg:w-[50%] order-2 lg:order-1 lg:pl-8 lg:-mt-4">
           
           <div className="space-y-4 lg:space-y-6">
-            {/* "Hi, I'm" and Name - Shifted up */}
+            {/* "Hi, I'm" and Name */}
             <div className="text-center lg:text-left">
               <h2 className="text-lg lg:text-xl font-medium text-gray-300 mb-2">
                 Hi, I&apos;m
@@ -126,7 +135,7 @@ export default function Hero() {
               </h1>
             </div>
 
-            {/* "AI Engineer" - DIRECTLY under name */}
+            {/* "AI Engineer" */}
             <div className="text-center lg:text-left -mt-2">
               <p className="text-lg md:text-xl lg:text-2xl font-medium text-white tracking-tight">
                 AI Engineer & Software Developer
@@ -136,51 +145,51 @@ export default function Hero() {
             {/* Horizontal line divider */}
             <div className="hidden lg:block w-14 h-px bg-gray-600 mt-3 mb-4"></div>
 
-            {/* "Building intelligent systems" */}
-            <div className="text-center lg:text-left space-y-1">
-              <h2 className="text-xl md:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent tracking-tight">
-                Building intelligent systems
-              </h2>
-              <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-400 tracking-tight">
-                with real-world impact
-              </h2>
+            {/* "I architect..." text - LINE BREAKS ADDED */}
+            <div className="text-center lg:text-left max-w-lg">
+              <p className="text-base text-gray-300 leading-relaxed">
+                I architect end-to-end AI systems<br />
+                and robust data pipelines, specialized<br />
+                in translating complex data into<br />
+                production software.
+              </p>
             </div>
 
-            {/* CTA BUTTON - REMOVED CONTACT BUTTON */}
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 lg:gap-6 pt-4">
+            {/* CTA BUTTON */}
+            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 lg:gap-4 pt-4">
               <Link 
                 href="#projects" 
-                className="group relative inline-flex items-center justify-center lg:justify-start gap-3 bg-blue-600 hover:bg-white hover:text-blue-600 pl-4 pr-6 py-3 lg:pl-3 lg:pr-8 lg:py-3 rounded-full transition-all duration-300 shadow-[0_0_20px_rgba(37,99,235,0.4)]"
+                className="group relative inline-flex items-center justify-center lg:justify-start gap-3 bg-blue-600 hover:bg-white hover:text-blue-600 pl-4 pr-6 py-2.5 lg:pl-3 lg:pr-7 lg:py-2.5 rounded-full transition-all duration-300 shadow-[0_0_20px_rgba(37,99,235,0.4)]"
               >
-                <div className="h-10 w-10 rounded-full bg-white flex items-center justify-center transition-transform group-hover:rotate-45">
-                  <ArrowRightIcon className="h-5 w-5 text-blue-600" />
+                <div className="h-9 w-9 rounded-full bg-white flex items-center justify-center transition-transform group-hover:rotate-45">
+                  <ArrowRightIcon className="h-4 w-4 text-blue-600" />
                 </div>
-                <span className="font-bold uppercase tracking-widest text-xs lg:text-[11px]">Explore My Work</span>
+                <span className="font-bold uppercase tracking-widest text-[10px]">Explore My Work</span>
               </Link>
 
               {/* MOBILE: CV BUTTON AND SOCIAL */}
-              <div className="flex flex-col sm:flex-row items-center gap-4 lg:hidden">
+              <div className="flex flex-col sm:flex-row items-center gap-3 lg:hidden">
                 <a 
                   href="https://drive.google.com/file/d/1e6nA8vGph-R66XYy-tDq1943vfBeEemQ/view?usp=drive_link" 
                   target="_blank"
-                  className="inline-flex items-center gap-2 text-sm font-medium text-white bg-white/10 border border-white/20 px-5 py-2.5 rounded hover:bg-white hover:text-black transition-all"
+                  className="inline-flex items-center gap-2 text-sm font-medium text-white bg-white/5 border border-white/20 px-4 py-2 rounded hover:bg-white hover:text-black transition-all"
                 >
-                  <ArrowDownTrayIcon className="h-4 w-4" />
+                  <ArrowDownTrayIcon className="h-3.5 w-3.5" />
                   Download CV
                 </a>
 
-                <div className="flex items-center gap-1 p-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
-                  <SocialIcon href="https://github.com/VishnujanNarayanan" icon={<Github size={16} />} />
-                  <SocialIcon href="https://www.linkedin.com/in/vishnujan-narayanan" icon={<Linkedin size={16} />} />
-                  <SocialIcon href="mailto:narayanan.vishnujan@gmail.com" icon={<Mail size={16} />} />
+                <div className="flex items-center gap-0.5 p-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
+                  <SocialIcon href="https://github.com/VishnujanNarayanan" icon={<Github size={14} />} />
+                  <SocialIcon href="https://www.linkedin.com/in/vishnujan-narayanan" icon={<Linkedin size={14} />} />
+                  <SocialIcon href="mailto:narayanan.vishnujan@gmail.com" icon={<Mail size={14} />} />
                 </div>
               </div>
 
               {/* DESKTOP SOCIAL DOCK */}
-              <div className="hidden lg:flex items-center gap-1 p-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
-                <SocialIcon href="https://github.com/VishnujanNarayanan" icon={<Github size={18} />} />
-                <SocialIcon href="https://www.linkedin.com/in/vishnujan-narayanan" icon={<Linkedin size={18} />} />
-                <SocialIcon href="mailto:narayanan.vishnujan@gmail.com" icon={<Mail size={18} />} />
+              <div className="hidden lg:flex items-center gap-0.5 p-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
+                <SocialIcon href="https://github.com/VishnujanNarayanan" icon={<Github size={16} />} />
+                <SocialIcon href="https://www.linkedin.com/in/vishnujan-narayanan" icon={<Linkedin size={16} />} />
+                <SocialIcon href="mailto:narayanan.vishnujan@gmail.com" icon={<Mail size={16} />} />
               </div>
             </div>
           </div>
@@ -188,16 +197,16 @@ export default function Hero() {
 
         {/* RIGHT COLUMN: QUICK LINKS BUTTONS */}
         <div className="hidden lg:flex flex-col items-end w-[20%] order-2 lg:pl-12 lg:-mt-4">
-          <div className="w-full space-y-4">
-            <h3 className="text-xs font-black uppercase tracking-[0.3em] text-gray-400 mb-4 text-right">
+          <div className="w-full space-y-3">
+            <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-3 text-right">
               Quick Links
             </h3>
             
-            <div className="space-y-3">
-              <SideButton href="#projects" icon={<Code size={16} />} text="Projects" />
-              <SideButton href="#experience" icon={<Briefcase size={16} />} text="Work Experience" />
-              <SideButton href="#skills" icon={<User size={16} />} text="Skills" />
-              <SideButton href="#contact" icon={<Phone size={16} />} text="Contact" />
+            <div className="space-y-2.5">
+              <SideButton href="#projects" icon={<Code size={14} />} text="Projects" />
+              <SideButton href="#experience" icon={<Briefcase size={14} />} text="Work Experience" />
+              <SideButton href="#skills" icon={<User size={14} />} text="Skills" />
+              <SideButton href="#contact" icon={<Phone size={14} />} text="Contact" />
             </div>
           </div>
         </div>
@@ -217,7 +226,7 @@ function SocialIcon({ href, icon }: { href: string; icon: React.ReactNode }) {
     <a
       href={href}
       target="_blank"
-      className="p-2.5 rounded-full text-gray-400 hover:text-white hover:bg-white/10 transition-all"
+      className="p-2 rounded-full text-gray-400 hover:text-white hover:bg-white/10 transition-all"
     >
       {icon}
     </a>
@@ -228,10 +237,10 @@ function SideButton({ href, icon, text }: { href: string; icon: React.ReactNode;
   return (
     <Link
       href={href}
-      className="group flex items-center justify-end gap-3 text-white bg-white/5 border border-white/10 px-4 py-3 rounded-lg hover:bg-white/10 hover:border-cyan-400/30 transition-all duration-300"
+      className="group flex items-center justify-end gap-2 text-white bg-white/5 border border-white/10 px-3 py-2 rounded-lg hover:bg-white/10 hover:border-cyan-400/30 transition-all duration-300 text-xs"
     >
-      <span className="text-xs font-medium uppercase tracking-widest">{text}</span>
-      <div className="p-2 rounded-full bg-white/10 group-hover:bg-cyan-400/20 transition-colors">
+      <span className="font-medium uppercase tracking-widest text-[10px]">{text}</span>
+      <div className="p-1.5 rounded-full bg-white/10 group-hover:bg-cyan-400/20 transition-colors">
         {icon}
       </div>
     </Link>
