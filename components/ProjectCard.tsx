@@ -17,9 +17,10 @@ interface ProjectCardProps {
   index: number
   totalCards: number
   row?: number
-  isMobileExpanded: boolean
-  onMobileTap: () => void
-  resetExpandedMobile: () => void
+  // Make these props optional with defaults
+  isMobileExpanded?: boolean
+  onMobileTap?: () => void
+  resetExpandedMobile?: () => void
 }
 
 const colorClasses = {
@@ -74,9 +75,10 @@ export default function ProjectCard({
   index, 
   totalCards = 3, 
   row = 0,
-  isMobileExpanded,
-  onMobileTap,
-  resetExpandedMobile
+  // Add default values
+  isMobileExpanded = false,
+  onMobileTap = () => {},
+  resetExpandedMobile = () => {}
 }: ProjectCardProps) {
   const [isExpanded, setIsExpanded] = useState(false)
   const [isHovering, setIsHovering] = useState(false)
@@ -108,6 +110,10 @@ export default function ProjectCard({
       setIsHovering(false)
       document.body.classList.remove('card-expanded')
     }
+  }
+
+  const handleMobileTap = () => {
+    onMobileTap()
   }
 
   const handleOpenMobileDialog = (e: React.MouseEvent) => {
@@ -402,7 +408,7 @@ export default function ProjectCard({
             minHeight: isMobileExpanded ? '360px' : '240px',
             overflow: 'hidden',
           }}
-          onClick={onMobileTap}
+          onClick={handleMobileTap}
         >
           <div className={`h-1.5 rounded-t-2xl bg-gradient-to-r ${colors.gradient}`} />
           
@@ -465,7 +471,6 @@ export default function ProjectCard({
             </div>
           )}
         </div>
-
 
         {/* Hover Indicator - Desktop only */}
         {!isExpanded && !isHovering && (
