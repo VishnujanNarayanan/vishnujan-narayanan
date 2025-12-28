@@ -48,7 +48,7 @@ export default function Hero() {
       {/* 3. REPLACED BADGE WITH NEXT.js INFO */}
       <div className="absolute top-4 right-4 lg:top-8 lg:right-8 z-30">
         <div className="bg-white/10 backdrop-blur-sm px-3 py-1.5 lg:px-4 lg:py-2 rounded-lg border border-white/20 flex items-center gap-2">
-          <span className="text-[8px] lg:text-[9px] font-medium text-gray-300">
+          <span className="text-[12px] lg:text-[13px] font-medium text-gray-300">
             Built with Next.js
           </span>
           <a 
@@ -127,17 +127,18 @@ export default function Hero() {
               <h2 className="text-lg lg:text-xl font-medium text-gray-300 mb-2">
                 Hi, I&apos;m
               </h2>
-              
+                            
               <h1 className="text-4xl md:text-6xl lg:text-[85px] font-bold tracking-tight leading-[0.85]">
                 <span className="bg-gradient-to-r from-blue-500 via-blue-400 to-cyan-400 bg-clip-text text-transparent">
-                  Vishnujan <br /> Narayanan
+                  Vishnujan <br /> 
+                  <span className="text-[75px]">Narayanan</span>
                 </span>
               </h1>
             </div>
 
             {/* "AI Engineer" */}
             <div className="text-center lg:text-left -mt-2">
-              <p className="text-lg md:text-xl lg:text-2xl font-medium text-white tracking-tight">
+              <p className="text-lg md:text-xl lg:text-4xl font-medium text-white tracking-tight">
                 AI Engineer & Software Developer
               </p>
             </div>
@@ -148,10 +149,11 @@ export default function Hero() {
             {/* "I architect..." text - LINE BREAKS ADDED */}
             <div className="text-center lg:text-left max-w-lg">
               <p className="text-base text-gray-300 leading-relaxed">
-                I architect end-to-end AI systems<br />
-                and robust data pipelines, specialized<br />
-                in translating complex data into<br />
-                production software.
+                I architect end-to-end AI<br />
+                systems and robust data pipelines,<br />
+                specialized in translating complex<br />
+                data into production<br /> 
+                software.
               </p>
             </div>
 
