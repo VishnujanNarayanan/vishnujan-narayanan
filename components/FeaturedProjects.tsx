@@ -3,9 +3,11 @@
 import ProjectCard from './ProjectCard'
 import { projects } from '@/lib/data'
 import Link from 'next/link'
+import { useState } from 'react'
 
 export default function FeaturedProjects() {
   const featuredProjects = projects.slice(0, 3)
+  const [expandedCardId, setExpandedCardId] = useState<number | null>(null)
 
   return (
     <section id="projects" className="py-20 bg-gray-900">
@@ -52,6 +54,8 @@ export default function FeaturedProjects() {
                 index={index}
                 totalCards={3}
                 row={0}
+                expandedCardId={expandedCardId}
+                onCardExpand={setExpandedCardId}
               />
             </div>
           ))}

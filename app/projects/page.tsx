@@ -1,8 +1,12 @@
+'use client'
+
 import ProjectCard from '@/components/ProjectCard'
 import { projects } from '@/lib/data'
+import { useState } from 'react'
 
 export default function ProjectsPage() {
   const cardsPerRow = 3
+  const [expandedCardId, setExpandedCardId] = useState<number | null>(null)
   
   return (
     <section className="section-padding min-h-screen">
@@ -44,6 +48,8 @@ export default function ProjectsPage() {
                   index={col}
                   totalCards={cardsPerRow}
                   row={row}
+                  expandedCardId={expandedCardId}
+                  onCardExpand={setExpandedCardId}
                 />
               </div>
             )
