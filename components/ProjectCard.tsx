@@ -75,18 +75,23 @@ export default function ProjectCard({
   index, 
   totalCards = 3, 
   row = 0,
-  // Add default values
-  isMobileExpanded = false,
-  onMobileTap = () => {},
-  resetExpandedMobile = () => {}
+  // Make these props optional
+  isMobileExpanded,
+  onMobileTap,
+  resetExpandedMobile
 }: ProjectCardProps) {
   const [isExpanded, setIsExpanded] = useState(false)
   const [isHovering, setIsHovering] = useState(false)
   const [isMobileDialogOpen, setIsMobileDialogOpen] = useState(false)
   const [primaryColor, setPrimaryColor] = useState<ColorKey>('blue')
+  const [localMobileExpanded, setLocalMobileExpanded] = useState(false)
   const cardRef = useRef<HTMLDivElement>(null)
   const dialogRef = useRef<HTMLDivElement>(null)
   const mobileCardRef = useRef<HTMLDivElement>(null)
+  
+  // Determine if mobile card is expanded
+  // Use prop if provided, otherwise use local state
+  const mobileExpanded = isMobileExpanded !== undefined ? isMobileExpanded : localMobileExpanded
   
   useEffect(() => {
     const colors: ColorKey[] = ['blue', 'purple', 'cyan', 'green', 'orange', 'pink']
@@ -113,7 +118,13 @@ export default function ProjectCard({
   }
 
   const handleMobileTap = () => {
-    onMobileTap()
+    if (onMobileTap) {
+      // Use parent-controlled state
+      onMobileTap()
+    } else {
+      // Use local state
+      setLocalMobileExpanded(!localMobileExpanded)
+    }
   }
 
   const handleOpenMobileDialog = (e: React.MouseEvent) => {
@@ -400,12 +411,12 @@ export default function ProjectCard({
         <div 
           ref={mobileCardRef}
           className={`lg:hidden bg-gray-900 rounded-2xl border transition-all duration-300 ${
-            isMobileExpanded 
+            mobileExpanded 
               ? `${colors.border} shadow-xl scale-[1.02] z-10 mb-6` 
               : 'border-gray-800 shadow-sm'
           }`}
           style={{
-            minHeight: isMobileExpanded ? '360px' : '240px',
+            minHeight: mobileExpanded ? '360px' : '240px',
             overflow: 'hidden',
           }}
           onClick={handleMobileTap}
@@ -431,7 +442,7 @@ export default function ProjectCard({
             </div>
 
             {/* Show technologies when expanded */}
-            {isMobileExpanded && (
+            {mobileExpanded && (
               <>
                 <div className="mb-6 animate-fade-in">
                   <h4 className="font-semibold text-white mb-3 text-sm">
@@ -462,7 +473,7 @@ export default function ProjectCard({
           </div>
 
           {/* Simple hint when not expanded */}
-          {!isMobileExpanded && (
+          {!mobileExpanded && (
             <div className="px-6 pb-4 text-center">
               <div className="flex items-center justify-center gap-1 text-xs text-gray-400">
                 <EyeIcon className="h-3 w-3" />
