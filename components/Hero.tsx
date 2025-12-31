@@ -131,8 +131,8 @@ export default function Hero() {
               <h1 className="text-3xl md:text-5xl lg:text-[85px] font-bold tracking-tight">
                 {/* Mobile: Stack names vertically with consistent size */}
                 <span className="bg-gradient-to-r from-blue-500 via-blue-400 to-cyan-400 bg-clip-text text-transparent block">
-                  <span className="block text-4xl md:text-6xl">Vishnujan</span>
-                  <span className="block text-4xl md:text-6xl mt-1 lg:mt-0">Narayanan</span>
+                  <span className="block text-4xl md:text-6xl lg:inline lg:text-[85px]">Vishnujan</span>
+                  <span className="block text-4xl md:text-6xl mt-1 lg:mt-0 lg:inline lg:text-[85px] lg:ml-2">Narayanan</span>
                 </span>
               </h1>
             </div>
@@ -147,11 +147,21 @@ export default function Hero() {
             {/* Horizontal line divider */}
             <div className="hidden lg:block w-14 h-px bg-gray-600 mt-3 mb-4"></div>
 
-            {/* "I architect..." text - Improved mobile readability */}
+            {/* "I architect..." text - FIXED: Mobile normal, desktop with line breaks */}
             <div className="text-center lg:text-left max-w-lg mx-auto lg:mx-0">
-              <p className="text-base text-gray-300 leading-relaxed px-2 lg:px-0">
+              {/* Mobile version (no line breaks) */}
+              <p className="text-base text-gray-300 leading-relaxed block lg:hidden px-2">
                 I architect end-to-end AI systems and robust data pipelines, 
                 specialized in translating complex data into production software.
+              </p>
+              
+              {/* Desktop version (with line breaks) */}
+              <p className="text-base text-gray-300 leading-relaxed hidden lg:block">
+                I architect end-to-end AI<br />
+                systems and robust data pipelines,<br />
+                specialized in translating complex<br />
+                data into production<br /> 
+                software.
               </p>
             </div>
 
