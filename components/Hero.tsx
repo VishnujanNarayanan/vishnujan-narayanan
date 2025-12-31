@@ -122,22 +122,30 @@ export default function Hero() {
         <div className="flex-1 lg:w-[50%] order-2 lg:order-1 lg:pl-8 lg:-mt-4">
           
           <div className="space-y-4 lg:space-y-6">
-            {/* "Hi, I'm" and Name - FIXED FOR MOBILE */}
+            {/* "Hi, I'm" and Name - FIXED: Mobile with better spacing, PC exact same */}
             <div className="text-center lg:text-left">
               <h2 className="text-lg lg:text-xl font-medium text-gray-300 mb-2">
                 Hi, I&apos;m
               </h2>
                             
-              <h1 className="text-3xl md:text-5xl lg:text-[85px] font-bold tracking-tight">
-                {/* Mobile: Stack names vertically with consistent size */}
-                <span className="bg-gradient-to-r from-blue-500 via-blue-400 to-cyan-400 bg-clip-text text-transparent block">
-                  <span className="block text-4xl md:text-6xl lg:inline lg:text-[85px]">Vishnujan</span>
-                  <span className="block text-4xl md:text-6xl mt-1 lg:mt-0 lg:inline lg:text-[85px] lg:ml-2">Narayanan</span>
+              {/* Mobile: Fixed version */}
+              <h1 className="text-4xl md:text-6xl lg:text-[85px] font-bold tracking-tight leading-[0.85] block lg:hidden">
+                <span className="bg-gradient-to-r from-blue-500 via-blue-400 to-cyan-400 bg-clip-text text-transparent">
+                  <span className="block text-4xl md:text-6xl">Vishnujan</span>
+                  <span className="block text-4xl md:text-6xl mt-1">Narayanan</span>
+                </span>
+              </h1>
+              
+              {/* PC: Exact same as original */}
+              <h1 className="text-4xl md:text-6xl lg:text-[85px] font-bold tracking-tight leading-[0.85] hidden lg:block">
+                <span className="bg-gradient-to-r from-blue-500 via-blue-400 to-cyan-400 bg-clip-text text-transparent">
+                  Vishnujan <br /> 
+                  <span className="text-[75px]">Narayanan</span>
                 </span>
               </h1>
             </div>
 
-            {/* "AI Engineer" - Adjusted for mobile */}
+            {/* "AI Engineer" */}
             <div className="text-center lg:text-left -mt-2">
               <p className="text-lg md:text-xl lg:text-4xl font-medium text-white tracking-tight">
                 AI Engineer & Software Developer
@@ -147,15 +155,15 @@ export default function Hero() {
             {/* Horizontal line divider */}
             <div className="hidden lg:block w-14 h-px bg-gray-600 mt-3 mb-4"></div>
 
-            {/* "I architect..." text - FIXED: Mobile normal, desktop with line breaks */}
-            <div className="text-center lg:text-left max-w-lg mx-auto lg:mx-0">
-              {/* Mobile version (no line breaks) */}
+            {/* "I architect..." text - FIXED: Mobile normal, PC with line breaks */}
+            <div className="text-center lg:text-left max-w-lg">
+              {/* Mobile: Single paragraph */}
               <p className="text-base text-gray-300 leading-relaxed block lg:hidden px-2">
                 I architect end-to-end AI systems and robust data pipelines, 
                 specialized in translating complex data into production software.
               </p>
               
-              {/* Desktop version (with line breaks) */}
+              {/* PC: Exact same as original with line breaks */}
               <p className="text-base text-gray-300 leading-relaxed hidden lg:block">
                 I architect end-to-end AI<br />
                 systems and robust data pipelines,<br />
