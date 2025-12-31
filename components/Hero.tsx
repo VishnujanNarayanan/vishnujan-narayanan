@@ -128,16 +128,24 @@ export default function Hero() {
                 Hi, I&apos;m
               </h2>
                             
-              <h1 className="text-3xl md:text-5xl lg:text-[85px] font-bold tracking-tight">
-                {/* Mobile: Stack names vertically with consistent size */}
+              {/* Mobile version (from second script) */}
+              <h1 className="text-3xl md:text-5xl lg:text-[85px] font-bold tracking-tight block lg:hidden">
                 <span className="bg-gradient-to-r from-blue-500 via-blue-400 to-cyan-400 bg-clip-text text-transparent block">
                   <span className="block text-4xl md:text-6xl lg:inline lg:text-[85px]">Vishnujan</span>
                   <span className="block text-4xl md:text-6xl mt-1 lg:mt-0 lg:inline lg:text-[85px] lg:ml-2">Narayanan</span>
                 </span>
               </h1>
+              
+              {/* PC version (with line break like first script) */}
+              <h1 className="text-4xl md:text-6xl lg:text-[85px] font-bold tracking-tight leading-[0.85] hidden lg:block">
+                <span className="bg-gradient-to-r from-blue-500 via-blue-400 to-cyan-400 bg-clip-text text-transparent">
+                  Vishnujan <br /> 
+                  <span className="text-[75px]">Narayanan</span>
+                </span>
+              </h1>
             </div>
 
-            {/* "AI Engineer" - Adjusted for mobile */}
+            {/* "AI Engineer" */}
             <div className="text-center lg:text-left -mt-2">
               <p className="text-lg md:text-xl lg:text-4xl font-medium text-white tracking-tight">
                 AI Engineer & Software Developer
